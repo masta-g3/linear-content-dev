@@ -1,10 +1,10 @@
-baseURL = "https://example.com"
+baseURL = "https://blog.mg3.xyz"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Linear Content"
 theme = "cupper-hugo-theme"
 googleAnalytics = "UA-123456789-1"
-disqusShortname = "yourdiscussshortname"
+disqusShortname = ""
 enableGitInfo = true
 
 [taxonomies]
@@ -18,7 +18,7 @@ quality = 99
 
 [params]
 description = "Thoughts on markets, numeric computations, and other things."
-homeMetaContent = "An accessibility-friendly Hugo theme, ported from the original Cupper project."
+homeMetaContent = "Thoughts on markets, numeric computations, and other things."
 footer = "made with [♡](https://www.google.com/search?q=love), [Hugo](https://gohugo.io/), and [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme), by [masta_g3](https://twitter.com/masta_g3)"
 dateFormat = "Jan 2, 2006"
 codePenUser = ""
@@ -29,7 +29,7 @@ showThemeSwitcher = true
 defaultDarkTheme = false
 moveFooterToHeader = false
 logoAlt = "Linear Content by masta_g3"
-navTitleText = "LC"
+# navTitleText = "LC"
 
 
 [menu]
@@ -48,10 +48,10 @@ name = "NLP"
 url = "/tags/nlp"
 weight = 3
 
-[[menu.nav]]
-name = "Markets"
-url = "/about/"
-weight = 4
+# [[menu.nav]]
+# name = "About"
+# url = "/about/"
+# weight = 4
 
 [[menu.nav]]
 name = "RSS"

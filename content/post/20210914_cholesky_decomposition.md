@@ -33,7 +33,7 @@ From here we can solve efficiently for $c$ via *forward substitution*, and final
 
 &nbsp;&nbsp;&nbsp;&nbsp; $L^Tx=c$
 
-There are other ways of doing it, but this method is highly efficient.
+There are other ways of doing it, but this implementation can be faster.
 
 ### **2) Solving a linear regression.**
 
@@ -71,7 +71,101 @@ For a larger number of variables the relationship gets tricky. However we can de
 
 ## Example: Time Series Generation
 
-To be less abstract, lets look at a concrete example. We will use numpy to generate time series for 3 uncorrelated variables plus a target correlation matrix. Then with Cholesky's help we will derive the correlated time series.
+To be less abstract, lets look at a concrete example. Supose we are examining the returns of 3 financial assets, for which we derive a historical correlation matrix. In order to test a financial hypothesis, we would like to simulate *alternative histories* for the returns of these stocks, under the constrain that they follow the dynamics encoded in the correlation matrix. We can use the Cholesky decomposition for this purpose.
 
-## Comments
-- On its own the Cholesky decomposition is simply a matrix manipulation technique. The procedure itself not that interesting; what is interesting is what we can do with the transformed data representation. 
+Let's start by loading `numpy` and defining our target correlation matrix.
+
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+plt.style.use(['science','ieee', 'notebook'])
+```
+
+```python
+corr = np.array([[ 1.0, -0.8, 0.0],
+                 [-0.8,  1.0, 0.5],
+                 [ 0.0,  0.5, 1.0]])
+
+std_devs = np.array([0.01, 0.01, 0.01])
+covs = np.diag(std_devs) @ corr @ np.diag(std_devs)
+
+fig, ax = plt.subplots(figsize=(5, 3.5));
+sns.heatmap(corr, cmap='RdBu_r', ax=ax, annot=True, 
+            fmt='0.2%', vmin=-1, vmax=1)
+ax.set_title('Asset Correlation Matrix');
+```
+
+    
+![png](/resources/post/20210914_cholesky_decomposition/output_8_0.png)
+    
+
+
+Now we generate 3 uncorrelated time series, which we will use as the basis for our simulation experiment.
+
+
+```python
+## Random returns.
+X = np.random.normal(loc=0, scale=0.01, size=(500, 3))
+
+fig, ax = plt.subplots(figsize=(7,3));
+ax.plot((1+X).cumprod(axis=0)-1)
+ax.set_title('Uncorrelated Time Series for 3 Assets')
+ax.set_ylabel('r', rotation=0)
+ax.set_xlabel('t')
+ax.legend(labels=['A1', 'A2', 'A3'],
+          frameon=True);
+```
+
+    
+![png](/resources/post/20210914_cholesky_decomposition/output_10_0.png)
+    
+
+
+Following the equations from the *Monte Carlo simulation* section:
+
+
+```python
+L = np.linalg.cholesky(covs)
+X1 = (L @ X.T).T
+
+fig, ax = plt.subplots(figsize=(7,3));
+ax.plot((1+X1).cumprod(axis=0)-1)
+ax.set_title('Correlated Time Series for 3 Assets')
+ax.set_ylabel('r', rotation=0)
+ax.set_xlabel('t')
+ax.legend(labels=['A1', 'A2', 'A3'],
+          frameon=True);
+```
+
+    
+![png](/resources/post/20210914_cholesky_decomposition/output_12_0.png)
+    
+
+
+
+```python
+corr_emp = pd.DataFrame(X1).corr().values
+
+fig, ax = plt.subplots(figsize=(5, 3.5));
+sns.heatmap(corr_emp, cmap='RdBu', ax=ax, annot=True, 
+            fmt='0.2%', vmin=-1, vmax=1)
+ax.set_title('Asset Correlation Matrix')
+```
+
+    Text(0.5, 1.0, 'Asset Correlation Matrix')
+
+
+
+
+    
+![png](/resources/post/20210914_cholesky_decomposition/output_13_1.png)
+    
+
+
+As we see the results are pretty close to the original correlation matrix. This way we can generate *synthetic time series*, which can be useful for a number of purposes.
+
+## Conclusions
+On its own the Cholesky decomposition is simply a matrix manipulation technique. The procedure itself not that interesting; what is interesting is what we can do with the transformed data representation, which we can get in an efficient way.
