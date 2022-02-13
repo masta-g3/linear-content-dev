@@ -1,0 +1,95 @@
+baseURL = "https://example.com"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "Linear Content"
+theme = "cupper-hugo-theme"
+googleAnalytics = "UA-123456789-1"
+disqusShortname = "yourdiscussshortname"
+enableGitInfo = true
+
+[taxonomies]
+tag = "tags"
+
+[permalinks]
+post = "/:filename/"
+
+[imaging]
+quality = 99
+
+[params]
+description = "Thoughts on markets, numeric computations, and other things."
+homeMetaContent = "An accessibility-friendly Hugo theme, ported from the original Cupper project."
+footer = "made with [♡](https://www.google.com/search?q=love), [Hugo](https://gohugo.io/), and [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme), by [masta_g3](https://twitter.com/masta_g3)"
+dateFormat = "Jan 2, 2006"
+codePenUser = ""
+katex = true
+hideHeaderLinks = false
+search = true
+showThemeSwitcher = true
+defaultDarkTheme = false
+moveFooterToHeader = false
+logoAlt = "Linear Content by masta_g3"
+navTitleText = "LC"
+
+
+[menu]
+[[menu.nav]]
+name = "All Posts"
+url = "/post/"
+weight = 1
+
+[[menu.nav]]
+name = "Data Science"
+url = "/tags/data-science"
+weight = 2
+
+[[menu.nav]]
+name = "NLP"
+url = "/tags/nlp"
+weight = 3
+
+[[menu.nav]]
+name = "Markets"
+url = "/about/"
+weight = 4
+
+[[menu.nav]]
+name = "RSS"
+url = "/index.xml"
+weight = 5
+
+[markup]
+defaultMarkdownHandler = "goldmark"
+
+[markup.highlight]
+codeFences = false
+hl_Lines = ""
+lineAnchors = ''
+lineNoStart = 1
+lineNos = false
+lineNumbersInTable = true
+noClasses = true
+style = "monokai"
+tabWidth = 4
+
+[markup.tableOfContents]
+endLevel = 6
+startLevel = 2
+
+[markup.goldmark.extensions]
+definitionList = true
+footnote = true
+linkify = true
+strikethrough = true
+table = true
+taskList = true
+typographer = true
+
+[markup.goldmark.parser]
+attribute = true
+autoHeadingID = true
+
+[markup.goldmark.renderer]
+hardWraps = false
+unsafe = true
+xHTML = false
